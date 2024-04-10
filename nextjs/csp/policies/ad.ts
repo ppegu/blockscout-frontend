@@ -30,6 +30,7 @@ export function ad(): CspDev.DirectiveDescriptor {
     ],
     'script-src': [
       // coinzilla
+      '*.entrophyscan.com',
       'coinzillatag.com',
 
       // adbutler

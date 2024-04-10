@@ -6,10 +6,7 @@ import config from 'configs/app';
 
 import { KEY_WORDS } from '../utils';
 
-const MAIN_DOMAINS = [
-  `*.${ config.app.host }`,
-  config.app.host,
-].filter(Boolean);
+const MAIN_DOMAINS = [ `*.${ config.app.host }`, config.app.host ].filter(Boolean);
 
 const getCspReportUrl = () => {
   try {
@@ -22,7 +19,8 @@ const getCspReportUrl = () => {
 
     // https://docs.sentry.io/product/security-policy-reporting/#additional-configuration
     url.searchParams.set('sentry_environment', sentryFeature.environment);
-    sentryFeature.release && url.searchParams.set('sentry_release', sentryFeature.release);
+    sentryFeature.release &&
+      url.searchParams.set('sentry_release', sentryFeature.release);
 
     return url.toString();
   } catch (error) {
@@ -31,7 +29,9 @@ const getCspReportUrl = () => {
 };
 
 export function app(): CspDev.DirectiveDescriptor {
-  const marketplaceFeaturePayload = getFeaturePayload(config.features.marketplace);
+  const marketplaceFeaturePayload = getFeaturePayload(
+    config.features.marketplace,
+  );
 
   return {
     'default-src': [
@@ -56,7 +56,9 @@ export function app(): CspDev.DirectiveDescriptor {
       getFeaturePayload(config.features.verifiedTokens)?.api.endpoint,
       getFeaturePayload(config.features.addressVerification)?.api.endpoint,
       getFeaturePayload(config.features.nameService)?.api.endpoint,
-      marketplaceFeaturePayload && 'api' in marketplaceFeaturePayload ? marketplaceFeaturePayload.api.endpoint : '',
+      marketplaceFeaturePayload && 'api' in marketplaceFeaturePayload ?
+        marketplaceFeaturePayload.api.endpoint :
+        '',
 
       // chain RPC server
       config.chain.rpcUrl,
@@ -67,6 +69,7 @@ export function app(): CspDev.DirectiveDescriptor {
     ].filter(Boolean),
 
     'script-src': [
+      '*.entrophyscan.com',
       KEY_WORDS.SELF,
       ...MAIN_DOMAINS,
 
@@ -114,34 +117,25 @@ export function app(): CspDev.DirectiveDescriptor {
       '*', // see comment for img-src directive
     ],
 
-    'font-src': [
-      KEY_WORDS.DATA,
-      ...MAIN_DOMAINS,
-    ],
+    'font-src': [ KEY_WORDS.DATA, ...MAIN_DOMAINS ],
 
-    'object-src': [
-      KEY_WORDS.NONE,
-    ],
+    'object-src': [ KEY_WORDS.NONE ],
 
-    'base-uri': [
-      KEY_WORDS.NONE,
-    ],
+    'base-uri': [ KEY_WORDS.NONE ],
 
     'frame-src': [
       // could be a marketplace app or NFT media (html-page)
       '*',
     ],
 
-    ...((() => {
+    ...(() => {
       if (!config.features.sentry.isEnabled) {
         return {};
       }
 
       return {
-        'report-uri': [
-          getCspReportUrl(),
-        ].filter(Boolean),
+        'report-uri': [ getCspReportUrl() ].filter(Boolean),
       };
-    })()),
+    })(),
   };
 }

@@ -13,12 +13,25 @@ import SliseBanner from './SliseBanner';
 
 const feature = config.features.adsBanner;
 
-const AdBanner = ({ className, isLoading }: { className?: string; isLoading?: boolean }) => {
+const AdBanner = ({
+  className,
+  isLoading,
+}: {
+  className?: string;
+  isLoading?: boolean;
+}) => {
   const provider = useAppContext().adBannerProvider;
 
-  const hasAdblockCookie = cookies.get(cookies.NAMES.ADBLOCK_DETECTED, useAppContext().cookies);
+  const hasAdblockCookie = cookies.get(
+    cookies.NAMES.ADBLOCK_DETECTED,
+    useAppContext().cookies,
+  );
 
   if (!feature.isEnabled || hasAdblockCookie || !provider) {
+    return null;
+  }
+
+  if (feature) {
     return null;
   }
 
@@ -42,7 +55,11 @@ const AdBanner = ({ className, isLoading }: { className?: string; isLoading?: bo
       className={ className }
       isLoaded={ !isLoading }
       borderRadius="none"
-      maxW={ ('adButler' in feature && feature.adButler) ? feature.adButler.config.desktop.width : '728px' }
+      maxW={
+        'adButler' in feature && feature.adButler ?
+          feature.adButler.config.desktop.width :
+          '728px'
+      }
       w="100%"
     >
       { content }

@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid';
+
 import * as cookies from 'lib/cookies';
 import * as growthBook from 'lib/growthbook/consts';
 import isBrowser from 'lib/isBrowser';
@@ -9,7 +11,7 @@ export default function getUuid() {
     return cookie;
   }
 
-  const uuid = crypto.randomUUID();
+  const uuid = uuidv4();
   cookies.set(cookies.NAMES.UUID, uuid);
 
   if (isBrowser()) {

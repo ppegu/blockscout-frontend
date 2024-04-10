@@ -528,6 +528,7 @@ export const RESOURCES = {
 
   // APP STATS
   stats: {
+    endpoint: 'https://rpc.entrophyscan.com/',
     path: '/api/v2/stats',
     headers: {
       'updated-gas-oracle': 'true',

@@ -55,11 +55,11 @@ const AdBanner = ({
       className={ className }
       isLoaded={ !isLoading }
       borderRadius="none"
-      maxW={
-        'adButler' in feature && feature.adButler ?
-          feature.adButler.config.desktop.width :
-          '728px'
-      }
+      // maxW={
+      //   'adButler' in feature && feature.adButler ?
+      //     feature.adButler.config.desktop.width :
+      //     '728px'
+      // }
       w="100%"
     >
       { content }

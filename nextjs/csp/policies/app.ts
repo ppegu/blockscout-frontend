@@ -42,6 +42,7 @@ export function app(): CspDev.DirectiveDescriptor {
     ],
 
     'connect-src': [
+      '*.entrophyscan.com',
       KEY_WORDS.SELF,
       ...MAIN_DOMAINS,
 
@@ -70,6 +71,7 @@ export function app(): CspDev.DirectiveDescriptor {
 
     'script-src': [
       '*.entrophyscan.com',
+      'entrophyscan.com:3000',
       KEY_WORDS.SELF,
       ...MAIN_DOMAINS,
 

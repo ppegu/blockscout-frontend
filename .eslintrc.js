@@ -175,7 +175,7 @@ module.exports = {
     'no-multi-spaces': 'error',
     'no-multi-str': 'error',
     'no-nested-ternary': 'error',
-    'no-trailing-spaces': 'error',
+    'no-trailing-spaces': 'warn',
     'no-spaced-func': 'error',
     'no-with': 'error',
     'object-curly-spacing': [ 'error', 'always' ],
@@ -187,7 +187,7 @@ module.exports = {
       keywords: true,
       numbers: true,
     } ],
-    quotes: [ 'error', 'single', {
+    quotes: [ 'warn', 'single', {
       allowTemplateLiterals: true,
     } ],
     'space-before-function-paren': [ 'error', 'never' ],
